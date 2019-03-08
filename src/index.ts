@@ -1,6 +1,9 @@
 import express from 'express';
+import mongoose from 'mongoose';
 
-import { PORT } from './config';
+import { PORT, DB_URL } from './config';
+
+mongoose.connect(DB_URL, { useNewUrlParser: true });
 
 const app: express.Application = express();
 
