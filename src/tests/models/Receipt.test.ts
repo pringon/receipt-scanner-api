@@ -1,4 +1,16 @@
-import Receipt from '../../models/Receipt';
+import mongoose from 'mongoose';
+import { DB_URL } from '../../config';
+import Receipt, { IReceiptModel } from '../../models/Receipt';
+
+beforeAll(() => {
+
+  mongoose.connect(`${DB_URL}-test`, { useNewUrlParser : true });
+});
+
+afterAll(() => {
+
+  mongoose.connection.close();
+});
 
 const mockReceipt = {
   total: 500,
@@ -23,5 +35,13 @@ const mockReceipt = {
   ],
 };
 
-test('Receipt is correctly created', () => {
+describe('Receipt model', () => {
+
+  test('can create a receipt', async () => {
+    const receipt: IReceiptModel = await Receipt.create(mockReceipt);
+
+    expect(receipt.shop).toBe(mockReceipt.shop);
+    expect(receipt.total).toBe(mockReceipt.total);
+    expect(receipt.items.length).toBe(mockReceipt.items.length);
+  });
 });
