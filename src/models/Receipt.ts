@@ -1,4 +1,7 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+import { IReceipt } from '../interfaces/Receipt';
+
+interface IReceiptModel extends IReceipt, Document {}
 
 const receiptSchema: Schema = new Schema({
   createdAt: Date,
@@ -11,4 +14,4 @@ const receiptSchema: Schema = new Schema({
   }],
 });
 
-export default model('Receipt', receiptSchema);
+export default model<IReceiptModel>('Receipt', receiptSchema);
